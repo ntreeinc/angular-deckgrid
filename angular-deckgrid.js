@@ -337,7 +337,14 @@ angular.module('akoenig.deckgrid').factory('Deckgrid', [
         Deckgrid.prototype.$$getLayout = function $$getLayout () {
             var content = $window.getComputedStyle(this.$$elem, ':before').content,
                 layout;
-
+            /* 
+                First if statement is a hack 
+                from https://github.com/akoenig/angular-deckgrid/issues/69
+                to set a default, avoid CSS not found error
+            */
+            if (!content || content === '') {
+                content = '2 .column.column-1-2';
+            }
             if (content) {
                 content = content.replace(/'/g, '');  // before e.g. '3 .column.size-1of3'
                 content = content.replace(/"/g, '');  // before e.g. "3 .column.size-1of3"
